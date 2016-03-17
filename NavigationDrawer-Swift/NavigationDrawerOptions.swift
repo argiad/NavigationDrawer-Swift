@@ -48,17 +48,7 @@ class NavigationDrawerOptions
     
     var drawerController:UIViewController?
     
-    
-    
-//    /*
-//    In case the Navigation drawer is to be applied for single view controller.
-//    */
-//    init(view:UIView)
-//    {
-//        self.anchorView = view
-//        initDefaults()
-//    }
-    
+        
     init()
     {
         navigationDrawerXPosition = 0

@@ -1,4 +1,4 @@
-Navigation Drawer - Swift 
+Navigation Drawer - Swift 4 Ready
 ===================
 An easy to use android like navigation drawer library for iOS written in Swift. 
 
@@ -24,10 +24,10 @@ let options = NavigationDrawerOptions()
 You can also further customize it such as, 
 ```
 //If I want my drawer to show from left side of the screen
-options.navigationDrawerType = .LeftDrawer
+options.navigationDrawerType = .leftDrawer
 
 //If i want my drawer to show, when swiped in only from the left edge of the screen
-options.navigationDrawerOpenDirection = .LeftEdge
+options.navigationDrawerOpenDirection = .leftEdge
 
 //and many more
 ```
@@ -36,7 +36,7 @@ options.navigationDrawerOpenDirection = .LeftEdge
 /*
 Setting up Navigation Drawer. NOTE: This step is required only once. You can perform it in your first view controller. Instead of creating the new instance you use the shared instance of Navigation Drawer
 */
-let navigationDrawer = NavigationDrawer.sharedInstance
+let navigationDrawer = NavigationDrawer.instance
 
 //setting up this drawer with our options.
 navigationDrawer.setup(withOptions: options)

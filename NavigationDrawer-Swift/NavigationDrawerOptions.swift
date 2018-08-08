@@ -5,6 +5,8 @@
 //  Created by Nishan on 2/25/16.
 //  Copyright © 2016 Nishan. All rights reserved.
 //
+//  Edited by Artem Mkrtchyan 8/7/2018
+//
 
 import Foundation
 import UIKit
@@ -12,16 +14,16 @@ import UIKit
 //Types of drawer. Left drawer open from Left side of screen whereas Right drawer opens from right side of the screen
 enum NavigationDrawerType
 {
-    case LeftDrawer
-    case RightDrawer
+    case leftDrawer
+    case rightDrawer
 }
 
 //Modes for opening navigation drawer. Default is Anywhere, i.e anywhere can be swiped to open navigation drawer. For Left Drawer Type , RightEdge is overridden by LeftEdge. For Right Drawer Type , LeftEdge is overridden by RighEdge
 enum NavigationDrawerOpenDirection
 {
-    case AnyWhere
-    case LeftEdge
-    case RightEdge
+    case anyWhere
+    case leftEdge
+    case rightEdge
 }
 
 class NavigationDrawerOptions
@@ -41,9 +43,9 @@ class NavigationDrawerOptions
     var navigationDrawerHeight:CGFloat!
     var navigationDrawerXPosition:CGFloat!
     var navigationDrawerYPosition:CGFloat!
-    var navigationDrawerBackgroundColor = UIColor.whiteColor()
-    var navigationDrawerType = NavigationDrawerType.LeftDrawer
-    var navigationDrawerOpenDirection = NavigationDrawerOpenDirection.AnyWhere
+    var navigationDrawerBackgroundColor = UIColor.white
+    var navigationDrawerType = NavigationDrawerType.leftDrawer
+    var navigationDrawerOpenDirection = NavigationDrawerOpenDirection.anyWhere
     var navigationDrawerEdgeSwipeDistance:CGFloat = 20.0
     
     var drawerController:UIViewController?
@@ -82,7 +84,7 @@ class NavigationDrawerOptions
     */
     func getNavigationDrawerXPosition()->CGFloat
     {
-        if navigationDrawerType == .LeftDrawer
+        if navigationDrawerType == .leftDrawer
         {
             navigationDrawerXPosition = 0
         }

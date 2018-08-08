@@ -5,29 +5,31 @@
 //  Created by Nishan on 2/25/16.
 //  Copyright © 2016 Nishan. All rights reserved.
 //
+//  Edited by Artem Mkrtchyan 8/7/2018
+//
 
 import Foundation
 import UIKit
 
 @objc protocol NavigationDrawerDelegate
 {
-    optional func navigationDrawerDidShow(didShow:Bool)
-    optional func navigationDrawerDidHide(didHide:Bool)
+    @objc optional func navigationDrawerDidShow(didShow:Bool)
+    @objc optional func navigationDrawerDidHide(didHide:Bool)
 }
 
 class NavigationDrawer: NSObject
 {
     
-    static let sharedInstance = NavigationDrawer()
+    static let instance = NavigationDrawer()
     
     //MARK: Public variable
     var delegate:NavigationDrawerDelegate?
     
     //MARK: Private Variables
-    private var options:NavigationDrawerOptions!
+    var options:NavigationDrawerOptions!
     private var isDrawerShown = false
     private var navigationDrawerContainer = UIView()
-    private var navigationDrawer = UIView()
+     var navigationDrawer = UIView()
     
     /*
     Sets options for Navigation Drawer and starts preparing navigation drawer for display
@@ -46,36 +48,36 @@ class NavigationDrawer: NSObject
     private func initNavigationDrawer()
     {
         //setting up container for navigation drawer
-        navigationDrawerContainer.frame = CGRectMake(0, 0, options.getAnchorViewWidth(), options.getAnchorViewHeight())
-        navigationDrawerContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+        navigationDrawerContainer.frame = CGRect(x: 0, y: 0, width: options.getAnchorViewWidth(), height: options.getAnchorViewHeight())
+        navigationDrawerContainer.backgroundColor = UIColor.black.withAlphaComponent(0)
         
         //Tap gesture to hide drawer
-        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTapNavigation:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavigation(_:))) 
         tapGesture.numberOfTapsRequired = 1
         tapGesture.numberOfTouchesRequired = 1
         tapGesture.delegate = self
         navigationDrawerContainer.addGestureRecognizer(tapGesture)
         
         //swipe gesture to hide and show drawer
-        let drawerCloseGesture = UISwipeGestureRecognizer(target: self, action: "handleSwipeNavigation:")
+        let drawerCloseGesture = UISwipeGestureRecognizer(target: self, action:#selector(handleSwipeNavigation(_:)))
         
-        if options.navigationDrawerType == NavigationDrawerType.LeftDrawer
+        if options.navigationDrawerType == NavigationDrawerType.leftDrawer
         {
-            let leftToRightSwiper = UISwipeGestureRecognizer(target: self, action: "handleSwipeNavigation:")
-            leftToRightSwiper.direction = .Right
-            drawerCloseGesture.direction = .Left
+            let leftToRightSwiper = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeNavigation(_:)))
+            leftToRightSwiper.direction = .right
+            drawerCloseGesture.direction = .left
             options.anchorView!.addGestureRecognizer(leftToRightSwiper)
         }
         else
         {
-            let rightToLeftSwiper = UISwipeGestureRecognizer(target: self, action: "handleSwipeNavigation:")
-            rightToLeftSwiper.direction = .Left
-            drawerCloseGesture.direction = .Right
+            let rightToLeftSwiper = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeNavigation(_:)))
+            rightToLeftSwiper.direction = .left
+            drawerCloseGesture.direction = .right
             options.anchorView!.addGestureRecognizer(rightToLeftSwiper)
         }
         
         //setting up navigation drawer
-        navigationDrawer.frame = CGRectMake(options.getNavigationDrawerXPosition(), options.navigationDrawerYPosition, options.navigationDrawerWidth, options.navigationDrawerHeight)
+        navigationDrawer.frame = CGRect(x: options.getNavigationDrawerXPosition(), y: options.navigationDrawerYPosition, width: options.navigationDrawerWidth, height: options.navigationDrawerHeight)
         navigationDrawer.backgroundColor = options!.navigationDrawerBackgroundColor
         navigationDrawer.addGestureRecognizer(drawerCloseGesture)
         navigationDrawerContainer.addSubview(navigationDrawer)
@@ -94,20 +96,20 @@ class NavigationDrawer: NSObject
         {
             isDrawerShown = true
             self.options.anchorView!.addSubview(self.navigationDrawerContainer)
-            self.options.anchorView!.bringSubviewToFront(self.navigationDrawerContainer)
+            self.options.anchorView!.bringSubview(toFront: self.navigationDrawerContainer)
             
-            if options.navigationDrawerType == NavigationDrawerType.LeftDrawer
+            if options.navigationDrawerType == NavigationDrawerType.leftDrawer
             {
                 navigationDrawer.frame.origin.x = -options.navigationDrawerWidth
                 
-                UIView.animateWithDuration(0.5, animations: {[unowned self]() -> Void in
+                UIView.animate(withDuration: 0.5, animations: {[unowned self]() -> Void in
                     
                     self.navigationDrawer.frame.origin.x += self.options.navigationDrawerWidth
-                    self.navigationDrawerContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
+                    self.navigationDrawerContainer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                     }, completion: {[unowned self](finished) -> Void in
                         if finished
                         {
-                            self.delegate?.navigationDrawerDidShow?(true)
+                            self.delegate?.navigationDrawerDidShow?(didShow: true)
                             completionHandler?()
                         }
                 })
@@ -115,13 +117,13 @@ class NavigationDrawer: NSObject
             else
             {
                 navigationDrawer.frame.origin.x += options.navigationDrawerWidth
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                UIView.animate(withDuration: 0.5, animations: { () -> Void in
                     
                     self.navigationDrawer.frame.origin.x -= self.options.navigationDrawerWidth
                     //self.navigationDrawerContainer.alpha = 0.4
-                    self.navigationDrawerContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
+                    self.navigationDrawerContainer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                     }, completion: { (finished) -> Void in
-                        self.delegate?.navigationDrawerDidShow?(true)
+                        self.delegate?.navigationDrawerDidShow?(didShow: true)
                         completionHandler?()
                 })
             }
@@ -129,33 +131,33 @@ class NavigationDrawer: NSObject
         else
         {
             isDrawerShown = false
-            if options.navigationDrawerType == NavigationDrawerType.LeftDrawer
+            if options.navigationDrawerType == NavigationDrawerType.leftDrawer
             {
-                UIView.animateWithDuration(0.5, animations: {[unowned self]() -> Void in
+                UIView.animate(withDuration: 0.5, animations: {[unowned self]() -> Void in
                     
                     self.navigationDrawer.frame.origin.x -= self.options.navigationDrawerWidth
-                   self.navigationDrawerContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+                    self.navigationDrawerContainer.backgroundColor = UIColor.black.withAlphaComponent(0)
                     }, completion: {[unowned self](finished) -> Void in
                         if finished
                         {
                             self.navigationDrawerContainer.removeFromSuperview()
-                            self.delegate?.navigationDrawerDidHide?(true)
+                            self.delegate?.navigationDrawerDidHide?(didHide: true)
                             completionHandler?()
                         }
                 })
             }
             else
             {
-                UIView.animateWithDuration(0.5, animations: {[unowned self]() -> Void in
+                UIView.animate(withDuration: 0.5, animations: {[unowned self]() -> Void in
                     
                     self.navigationDrawer.frame.origin.x += self.options.navigationDrawerWidth
-                    self.navigationDrawerContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+                    self.navigationDrawerContainer.backgroundColor = UIColor.black.withAlphaComponent(0)
                     }, completion: {[unowned self](finished) -> Void in
                         if finished
                         {
                             self.navigationDrawerContainer.removeFromSuperview()
                             self.navigationDrawer.frame.origin.x = self.options.navigationDrawerXPosition
-                            self.delegate?.navigationDrawerDidHide?(true)
+                            self.delegate?.navigationDrawerDidHide?(didHide: true)
                             completionHandler?()
                         }
                     })
@@ -168,9 +170,10 @@ class NavigationDrawer: NSObject
     
     -params: UITapGestureRecognizer
     */
-    func handleTapNavigation(sender:UITapGestureRecognizer)
+    @objc
+    func handleTapNavigation(_ sender:UITapGestureRecognizer)
     {
-        toggleNavigationDrawer(nil)
+        toggleNavigationDrawer(completionHandler: nil)
     }
     
     /*
@@ -178,31 +181,32 @@ class NavigationDrawer: NSObject
     
     -params: UISwipeGestureRecognizer
     */
-    func handleSwipeNavigation(sender:UISwipeGestureRecognizer)
+    @objc
+    func handleSwipeNavigation(_ sender:UISwipeGestureRecognizer)
     {
-        let location = sender.locationInView(options.anchorView).x
+        let location = sender.location(in: options.anchorView).x
         
         if !isDrawerShown
         {
            //For Opening
-            if options.navigationDrawerOpenDirection == NavigationDrawerOpenDirection.AnyWhere
+            if options.navigationDrawerOpenDirection == NavigationDrawerOpenDirection.anyWhere
             {
-                toggleNavigationDrawer(nil)
+                toggleNavigationDrawer(completionHandler: nil)
             }
             else
             {
-                if sender.direction == UISwipeGestureRecognizerDirection.Right
+                if sender.direction == UISwipeGestureRecognizerDirection.right
                 {
                     if location <= options.navigationDrawerEdgeSwipeDistance
                     {
-                        toggleNavigationDrawer(nil)
+                        toggleNavigationDrawer(completionHandler: nil)
                     }
                 }
-                else if sender.direction == UISwipeGestureRecognizerDirection.Left
+                else if sender.direction == UISwipeGestureRecognizerDirection.left
                 {
                     if location >= options.getAnchorViewWidth() - options.navigationDrawerEdgeSwipeDistance
                     {
-                        toggleNavigationDrawer(nil)
+                        toggleNavigationDrawer(completionHandler: nil)
                     }
                 }
             }
@@ -211,17 +215,17 @@ class NavigationDrawer: NSObject
         else
         {
             //For Closing
-            if options.navigationDrawerType == NavigationDrawerType.LeftDrawer{
-                if sender.direction == UISwipeGestureRecognizerDirection.Left
+            if options.navigationDrawerType == NavigationDrawerType.leftDrawer{
+                if sender.direction == UISwipeGestureRecognizerDirection.left
                 {
-                    toggleNavigationDrawer(nil)
+                    toggleNavigationDrawer(completionHandler: nil)
                 }
             }
             else
             {
-                if sender.direction == UISwipeGestureRecognizerDirection.Right
+                if sender.direction == UISwipeGestureRecognizerDirection.right
                 {
-                    toggleNavigationDrawer(nil)
+                    toggleNavigationDrawer(completionHandler: nil)
                 }
             }
             
@@ -264,12 +268,12 @@ extension NavigationDrawer: UIGestureRecognizerDelegate{
     /*
     Disables touch gesture for navigation drawer
     */
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
     {
         
-        let location = touch.locationInView(options.anchorView)
+        let location = touch.location(in: options.anchorView)
         
-        if CGRectContainsPoint(navigationDrawer.frame, location)
+        if navigationDrawer.frame.contains(location)
         {
             return false
         }

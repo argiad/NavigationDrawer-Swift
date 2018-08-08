@@ -5,6 +5,8 @@
 //  Created by Nishan on 2/25/16.
 //  Copyright © 2016 Nishan. All rights reserved.
 //
+//  Edited by Artem Mkrtchyan 8/7/2018
+//
 
 import UIKit
 
@@ -17,29 +19,29 @@ class ViewController: UIViewController {
         
         self.title = "Awesome Navigation Drawer"
     
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.Plain, target: self, action: "showDrawer")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.showDrawer))
         
         let options = NavigationDrawerOptions()
-        options.navigationDrawerType = .LeftDrawer
-        options.navigationDrawerOpenDirection = .AnyWhere
+        options.navigationDrawerType = .leftDrawer
+        options.navigationDrawerOpenDirection = .anyWhere
         options.navigationDrawerYPosition = 64
         
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("DrawerViewController") as! DrawerViewController
-        navigationDrawer = NavigationDrawer.sharedInstance
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DrawerViewController") as! DrawerViewController
+        navigationDrawer = NavigationDrawer.instance
         navigationDrawer.setup(withOptions: options)
-        navigationDrawer.setNavigationDrawerController(vc)
+        navigationDrawer.setNavigationDrawerController(viewController: vc)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        NavigationDrawer.sharedInstance.initialize(forViewController: self)
+        NavigationDrawer.instance.initialize(forViewController: self)
         
     }
     
-    func showDrawer()
+    @objc func showDrawer()
     {
-        NavigationDrawer.sharedInstance.toggleNavigationDrawer(nil)
+        NavigationDrawer.instance.toggleNavigationDrawer(completionHandler: nil)
     }
 
     

@@ -5,6 +5,8 @@
 //  Created by Nishan on 2/28/16.
 //  Copyright © 2016 Nishan. All rights reserved.
 //
+//  Edited by Artem Mkrtchyan 8/7/2018
+//
 
 import UIKit
 
@@ -19,9 +21,9 @@ class TestViewController: UIViewController {
         
         testLabel.text = text
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.Plain, target: self, action: "showDrawer")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TestViewController.showDrawer))
         
-        NavigationDrawer.sharedInstance.initialize(forViewController: self)
+        NavigationDrawer.instance.initialize(forViewController: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,9 +32,9 @@ class TestViewController: UIViewController {
     }
     
     
-    func showDrawer()
+    @objc func showDrawer()
     {
-        NavigationDrawer.sharedInstance.toggleNavigationDrawer(nil)
+        NavigationDrawer.instance.toggleNavigationDrawer(completionHandler: nil)
     }
 
   

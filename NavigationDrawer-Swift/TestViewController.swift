@@ -21,7 +21,7 @@ class TestViewController: UIViewController {
         
         testLabel.text = text
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TestViewController.showDrawer))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem( image: UIImage(named: "drawer_icon"), style: .plain, target: self, action: #selector(TestViewController.showDrawer))
         
         NavigationDrawer.instance.initialize(forViewController: self)
     }

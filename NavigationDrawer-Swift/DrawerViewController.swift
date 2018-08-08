@@ -13,6 +13,7 @@ import UIKit
 class DrawerViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var avatarImage: UIImageView!
     
     let menuItem = ["Home","Favourites","Recommended","Feedback","Settings"]
     
@@ -22,6 +23,7 @@ class DrawerViewController: UIViewController,UITableViewDataSource,UITableViewDe
         tableView.dataSource = self
         tableView.delegate = self
         
+        avatarImage.setRounded()
     }
 
     override func didReceiveMemoryWarning() {

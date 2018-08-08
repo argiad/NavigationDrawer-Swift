@@ -114,11 +114,21 @@
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anonym_user" translatesAutoresizingMaskIntoConstraints="NO" id="mCb-eg-Uay">
+                                        <rect key="frame" x="10" y="109" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="gXP-Kc-fjs"/>
+                                            <constraint firstAttribute="width" constant="32" id="qCN-dC-JR4"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.45835144129383282" green="0.77371479809538635" blue="0.93333333730697632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="i0r-Lb-Vcn" firstAttribute="top" secondItem="mCb-eg-Uay" secondAttribute="bottom" constant="8" id="DRa-ub-cak"/>
                                     <constraint firstItem="jcy-cU-laA" firstAttribute="leading" secondItem="7bz-Cz-H9Y" secondAttribute="leading" constant="10" id="N0D-uf-8u0"/>
+                                    <constraint firstItem="mCb-eg-Uay" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7bz-Cz-H9Y" secondAttribute="top" constant="40" id="Q3W-Jo-Ssq"/>
                                     <constraint firstItem="i0r-Lb-Vcn" firstAttribute="leading" secondItem="7bz-Cz-H9Y" secondAttribute="leading" constant="10" id="Wsx-IE-gB4"/>
+                                    <constraint firstItem="mCb-eg-Uay" firstAttribute="leading" secondItem="i0r-Lb-Vcn" secondAttribute="leading" id="dFY-hp-iad"/>
                                     <constraint firstItem="jcy-cU-laA" firstAttribute="top" secondItem="i0r-Lb-Vcn" secondAttribute="bottom" constant="8" id="j4c-93-fd8"/>
                                     <constraint firstAttribute="bottom" secondItem="jcy-cU-laA" secondAttribute="bottom" constant="10" id="jCS-ss-pwU"/>
                                 </constraints>
@@ -137,12 +147,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="avatarImage" destination="mCb-eg-Uay" id="JNw-tn-5di"/>
                         <outlet property="tableView" destination="Pu1-Xv-tSN" id="aOE-0R-1Am"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3C0-V7-dBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1718" y="-62"/>
+            <point key="canvasLocation" x="1717.5999999999999" y="-62.518740629685162"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="6yr-6Z-nZO">
@@ -196,4 +207,7 @@
             <point key="canvasLocation" x="420" y="-50"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="anonym_user" width="112" height="112"/>
+    </resources>
 </document>

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         self.title = "Awesome Navigation Drawer"
     
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.showDrawer))
+        self.navigationItem.leftBarButtonItem =  UIBarButtonItem( image: UIImage(named: "drawer_icon") , style: .plain, target: self, action: #selector(ViewController.showDrawer))
         
         let options = NavigationDrawerOptions()
         options.navigationDrawerType = .leftDrawer

@@ -253,9 +253,9 @@ class NavigationDrawer: NSObject
     */
     func initialize(forViewController viewController:UIViewController)
     {
-        options.anchorView = viewController.view
+        options.anchorView = (options.navigationDrawerAnchorController == .window) ? UIApplication.shared.keyWindow : viewController.view
         options.initDefaults()
-        viewController.addChildViewController(options.drawerController!)
+        if (options.navigationDrawerAnchorController != .window) { viewController.addChildViewController(options.drawerController!) }
         initNavigationDrawer()
     }
     

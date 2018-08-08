@@ -26,6 +26,12 @@ enum NavigationDrawerOpenDirection
     case rightEdge
 }
 
+// .parent - below NavigationBat .window - over it.  Default is .parent
+enum NavigationDrawerAnchorController {
+    case window
+    case parent
+}
+
 class NavigationDrawerOptions
 {
     
@@ -47,6 +53,7 @@ class NavigationDrawerOptions
     var navigationDrawerType = NavigationDrawerType.leftDrawer
     var navigationDrawerOpenDirection = NavigationDrawerOpenDirection.anyWhere
     var navigationDrawerEdgeSwipeDistance:CGFloat = 20.0
+    var navigationDrawerAnchorController : NavigationDrawerAnchorController = .parent
     
     var drawerController:UIViewController?
     

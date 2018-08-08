@@ -24,12 +24,14 @@ class ViewController: UIViewController {
         let options = NavigationDrawerOptions()
         options.navigationDrawerType = .leftDrawer
         options.navigationDrawerOpenDirection = .anyWhere
-        options.navigationDrawerYPosition = 64
+        options.navigationDrawerYPosition = 0
+        options.navigationDrawerAnchorController = .window
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "DrawerViewController") as! DrawerViewController
         navigationDrawer = NavigationDrawer.instance
         navigationDrawer.setup(withOptions: options)
         navigationDrawer.setNavigationDrawerController(viewController: vc)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

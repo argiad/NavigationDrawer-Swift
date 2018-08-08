@@ -45,21 +45,23 @@ class DrawerViewController: UIViewController,UITableViewDataSource,UITableViewDe
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        NavigationDrawer.instance.toggleNavigationDrawer { () -> Void in
-            
-            if indexPath.row != 0
-            {
-            
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "TestViewController") as! TestViewController
-            vc.text = self.menuItem[indexPath.row]
-            self.navigationController?.viewControllers = [vc]
-            
-            }
-            else
-            {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController")
-                self.navigationController?.viewControllers = [vc!]
-
+        let drawer = NavigationDrawer.instance
+        drawer.toggleNavigationDrawer { () -> Void in
+            if let controller = (( drawer.options.navigationDrawerAnchorController == .parent) ? self.parent?.navigationController : UIApplication.shared.delegate?.window??.rootViewController) as? UINavigationController {
+                if indexPath.row != 0
+                {
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "TestViewController") as! TestViewController
+                    vc.text = self.menuItem[indexPath.row]
+                    controller.viewControllers = [vc]
+                    
+                }
+                else
+                {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController")
+                    controller.viewControllers = [vc!]
+                    
+                }
             }
         }
     }
